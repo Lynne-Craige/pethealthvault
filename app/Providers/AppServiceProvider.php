@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
-class AppServiceProvider extends ServiceProvider
+class AppServiceProvider 
 {
 
-    public function register(): void {}
+
 
 
     public function boot(): void
