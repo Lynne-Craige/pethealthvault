@@ -73,8 +73,9 @@ class User extends Authenticatable implements HasName, MustVerifyEmail, CanReset
 
     public function canAccessFilament(): bool
 {
-    return $this->role_id === 1;
+    return $this->roles && $this->roles->name === 'admin';
 }
+
 
 
     
