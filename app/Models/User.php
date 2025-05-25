@@ -75,7 +75,7 @@ class User extends Authenticatable implements FilamentUser, HasName, MustVerifyE
     }
 
     
-    public funtion canAccessPanel(Panel $panel): bool
+    public function canAccessPanel(Panel $panel): bool
     {
         return true;
     }
