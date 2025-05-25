@@ -13,7 +13,7 @@ use Filament\Panel;
 use Filament\Models\Contracts\FilamentUser;
 
 
-class User extends Authenticatable implements HasName, MustVerifyEmail, CanResetPassword
+class User extends Authenticatable implements FilamentUser, HasName, MustVerifyEmail, CanResetPassword
 {
     use HasFactory, Notifiable;
 
@@ -75,10 +75,10 @@ class User extends Authenticatable implements HasName, MustVerifyEmail, CanReset
     }
 
     
-    public function canAccessPanel(\Filament\Panel $panel): bool
-{
-    return $this->role_id === 1;
-}
+    public funtion canAccessPanel(Panel $panel): bool
+    {
+        return true;
+    }
 
 
     
