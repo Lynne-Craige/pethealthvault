@@ -18,10 +18,10 @@ class AppServiceProvider extends ServiceProvider
 
     
     public function boot()
-    {
-        Appointment::observe(AppointmentObserver::class);
-        
+{
+    if (app()->environment('production')) {
+        URL::forceScheme('https');
     }
-
+}
 
 }
