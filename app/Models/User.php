@@ -7,7 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Filament\Panel\Contracts\FilamentUser; // ✅ Filament v3.2
+use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasName;
 
 class User extends Authenticatable implements FilamentUser, HasName, MustVerifyEmail, CanResetPassword
