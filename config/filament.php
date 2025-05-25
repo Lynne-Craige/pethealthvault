@@ -14,6 +14,8 @@ return [
     'path' => 'admin',
     'middleware' => ['web', 'auth'],
 
+    'enabled' => env('ENABLE_FILAMENT', true),
+
     
 
 
