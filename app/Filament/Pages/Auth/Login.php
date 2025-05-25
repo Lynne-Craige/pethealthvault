@@ -25,12 +25,17 @@ class Login extends BaseLogin
     protected function getEmailFormComponent(): TextInput
     {
         return TextInput::make('email')
-            ->label('Email Address')
+            ->label('Email')
             ->email()
-            ->required()
-            ->autocomplete()
-            ->autofocus()
-            ->extraInputAttributes(['tabindex' => 1]);
+            ->required();
+    }
+
+    protected function getPasswordFormComponent(): TextInput
+    {
+        return TextInput::make('password')
+            ->label('Password')
+            ->password()
+            ->required();
     }
 
     protected function getCredentialsFromFormData(array $data): array
