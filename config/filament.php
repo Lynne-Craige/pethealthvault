@@ -9,6 +9,10 @@ return [
         'enabled' => true,
     ],
 
+    'panels' => [
+        App\Providers\Filament\AdminPanelProvider::class,
+    ],
+
 
 
     'path' => 'admin',
