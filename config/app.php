@@ -4,9 +4,9 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
-    'env' => env('APP_ENV', 'production'),
+    'env' => env('APP_ENV', 'local'),
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool) env('APP_DEBUG', true),
 
     'url' => env('APP_URL', 'http://localhost'),
 
