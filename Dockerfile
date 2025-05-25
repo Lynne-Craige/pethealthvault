@@ -55,10 +55,8 @@ RUN chown -R www-data:www-data storage bootstrap/cache
 # Expose port 80 for Apache
 EXPOSE 80
 
-CMD php artisan config:clear && \
-php artisan cache:clear && \
-php artisan migrate --force && \
-php artisan db:seed --force && \
-php artisan storage:link && \
-apache2-foreground
+CMD php artisan migrate --force && \
+    php artisan db:seed --force && \
+    php artisan storage:link && \
+    apache2-foreground
 
