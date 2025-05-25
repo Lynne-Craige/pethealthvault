@@ -53,9 +53,8 @@ class User extends Authenticatable implements FilamentUser, HasName, MustVerifyE
         return trim("{$this->firstname} {$this->lastname}");
     }
 
-    public function canAccessPanel(\Filament\Panel $panel): bool
+    public function canAccessPanel(Panel $panel): bool
     {
-        // ✅ Customize your admin access logic here
-        return $this->roles && $this->roles->name === 'Admin';
+        return $this->role_id === 1;
     }
 }
