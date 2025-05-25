@@ -7,6 +7,12 @@ use Filament\Forms\Components\TextInput;
 
 class Login extends BaseLogin
 {
+
+    public function __invoke()
+    {
+        // Logic for handling the login request or displaying the login page
+        return view('auth.login');
+    }
     
     protected function getFormSchema(): array
 
