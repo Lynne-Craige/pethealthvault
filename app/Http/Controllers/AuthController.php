@@ -34,7 +34,7 @@ class AuthController extends Controller
             $user = Auth::user();
 
             if ($user->role_id == 1) {
-                return redirect()->intended('admin');
+                return redirect()->intended('/admin');
             } elseif ($user->role_id == 2) {
                 return redirect()->route('owner.dashboard');
             }
