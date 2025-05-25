@@ -36,6 +36,9 @@ WORKDIR /var/www/html
 
 # Copy application files into container
 COPY . .
+
+RUN rm -rf bootstrap/cache/*.php
+
 # Only copy if the file exists
 COPY --chown=www-data:www-data .env.example .env
 
