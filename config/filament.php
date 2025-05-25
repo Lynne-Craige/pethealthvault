@@ -16,6 +16,10 @@ return [
 
     'enabled' => env('ENABLE_FILAMENT', true),
 
+    'panels' => [
+    App\Providers\Filament\AdminPanelProvider::class,
+],
+
     
 
 
