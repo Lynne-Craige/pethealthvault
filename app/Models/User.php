@@ -75,10 +75,11 @@ class User extends Authenticatable implements HasName, MustVerifyEmail, CanReset
     }
 
     
-    public function canAccessPanel(Panel $panel): bool
+    public function canAccessPanel(\Filament\Panel $panel): bool
 {
     return $this->role_id === 1;
 }
+
 
     
 }
