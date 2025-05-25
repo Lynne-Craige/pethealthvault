@@ -9,6 +9,13 @@ return [
         'enabled' => true,
     ],
 
+    'auth' => [
+    'logout' => [
+        'redirect_to' => '/PHV-Login', // change this to your login route
+    ],
+],
+
+
 
 
     'path' => 'admin',
