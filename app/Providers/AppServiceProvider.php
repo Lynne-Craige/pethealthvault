@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\URL;
 use App\Models\Appointment;
 use App\Observers\AppointmentObserver;
 use Filament\Facades\Filament;
