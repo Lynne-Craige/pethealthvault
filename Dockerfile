@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     unzip \
     git \
+    curl \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) \
         bcmath \
@@ -38,27 +39,33 @@ RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|' /et
 # Install Composer globally
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set working directory
+# Set working directory to Apache root
 WORKDIR /var/www/html
 
 # Copy application files
 COPY . .
 
-# Clean cached bootstrap
-RUN rm -rf bootstrap/cache/*.php
-
-# Use .env.example as default
+# Copy .env example as fallback (Render will inject real vars)
 COPY --chown=www-data:www-data .env.example .env
-
-# Install dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction --verbose
 
 # Set correct permissions
 RUN chown -R www-data:www-data storage bootstrap/cache public \
     && chmod -R 775 storage bootstrap/cache public
 
-# Expose port
+# Install PHP dependencies (skip diagnose to avoid build failure)
+RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --optimize-autoloader --no-scripts --no-interaction
+
+# Optional: install Filament only if not included in composer.json
+# RUN composer require filament/filament:"^3.0" --no-interaction --no-scripts
+
+# Expose port 80
 EXPOSE 80
 
-# Start Apache only; migrations run from Render's startCommand
-CMD ["apache2-foreground"]
+# Final setup and start Apache
+CMD mkdir -p storage/app/public && \
+    php artisan migrate --force && \
+    php artisan db:seed --force && \
+    php artisan storage:link && \
+    chown -R www-data:www-data storage bootstrap/cache public/storage && \
+    chmod -R 775 storage bootstrap/cache public/storage && \
+    apache2-foreground
