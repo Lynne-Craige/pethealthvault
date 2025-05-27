@@ -9,12 +9,8 @@ return [
         'enabled' => true,
     ],
 'auth' => [
-    'guard' => 'web', // Make sure this matches your custom guard if you have one
-    'logout' => [
-        'redirect' => '/login',
-    ],
+    'logout_route' => '/logout', // Ensure this matches your route
 ],
-
 
 
     'path' => 'admin',
