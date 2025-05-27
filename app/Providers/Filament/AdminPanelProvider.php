@@ -52,20 +52,19 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
-
-            
             ->authMiddleware([
                 Authenticate::class,
             ]);
     }
 
-    public function boot()
-{
-    Filament::serving(function () {
-        Filament::registerLogoutResponse(function () {
-            return redirect('/login'); // change this to your custom login route
-        });
-    });
+    public function boot(): void
+    {
+        parent::boot();
 
-    
+        Filament::serving(function () {
+            Filament::registerLogoutResponse(function () {
+                return redirect('/login');
+            });
+        });
+    }
 }
