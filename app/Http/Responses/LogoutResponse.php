@@ -8,6 +8,6 @@ class LogoutResponse implements LogoutResponseContract
 {
     public function toResponse($request)
     {
-        return redirect('/login'); // Or your custom login page
+        return redirect('/PHV-Login'); // Or your custom login page
     }
 }
