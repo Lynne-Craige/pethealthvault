@@ -61,7 +61,8 @@ RUN chown -R www-data:www-data storage bootstrap/cache public \
 # Expose port 80
 EXPOSE 80
 # Link storage and fix permissions
-CMD php artisan migrate --force && \
+CMD mkdir -p storage/app/public && \
+    php artisan migrate --force && \
     php artisan db:seed --force && \
     php artisan storage:link && \
     chown -R www-data:www-data storage bootstrap/cache public/storage && \
