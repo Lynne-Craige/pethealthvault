@@ -9,7 +9,8 @@ use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use App\Filament\Responses\Auth\CustomLogoutResponse;
-use Filament\Http\Responses\Auth\Contracts\LogoutResponse as LogoutResponseContract;
+use Filament\Responses\Auth\LogoutResponse as LogoutResponseContract;
+
 
 class AppServiceProvider extends ServiceProvider
 {
