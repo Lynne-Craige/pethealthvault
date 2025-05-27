@@ -18,6 +18,6 @@ Route::post("/reset-password", [AuthController::class, "resetPasswordPost"])->na
 Route::get("/change-password", [AuthController::class, "changePassword"])->name("change.password");
 Route::post("/update-password", [AuthController::class, "changePasswordUpdate"])->name("change.password.update");
 
-Route::post('/logout', [AuthController::class, 'logout'])->name('user.logout');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::post('/appointment-store', [AuthController::class, 'store'])->name('appointment.store');
