@@ -8,13 +8,12 @@ return [
     'database_notifications' => [
         'enabled' => true,
     ],
-
-    'auth' => [
+'auth' => [
+    'guard' => 'web', // Make sure this matches your custom guard if you have one
     'logout' => [
-        'redirect_to' => '/login', // change this to your login route
+        'redirect' => '/login',
     ],
 ],
-
 
 
 
