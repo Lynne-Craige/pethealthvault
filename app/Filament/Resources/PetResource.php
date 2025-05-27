@@ -111,7 +111,7 @@ class PetResource extends Resource
                     ->sortable()
                     ->searchable(),
                 ImageColumn::make('Image')
-                    ->getStateUsing(fn($record) => asset('storage/pets/' . $record->Image)
+                    ->getStateUsing(fn($record) => asset('storage/pets/' . $record->Image))
                     ->circular()
                     ->size(70),
                 Tables\Columns\TextColumn::make('UserID')
