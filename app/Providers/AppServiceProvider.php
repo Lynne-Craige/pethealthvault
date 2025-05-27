@@ -15,10 +15,7 @@ use Filament\Responses\Auth\LogoutResponse as LogoutResponseContract;
 class AppServiceProvider extends ServiceProvider
 {
     
-  public function register()
-{
-    $this->app->singleton(LogoutResponseContract::class, CustomLogoutResponse::class);
-}
+  
     
 
     
