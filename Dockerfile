@@ -1,6 +1,6 @@
 FROM php:8.2-apache
 
-# Install system dependencies and PHP extensions including PostgreSQL support
+# Install system dependencies and PHP extensions
 RUN apt-get update && apt-get install -y \
     libicu-dev \
     libzip-dev \
@@ -30,7 +30,7 @@ RUN echo '<Directory /var/www/html/public>' >> /etc/apache2/apache2.conf && \
     echo '    Options +FollowSymLinks' >> /etc/apache2/apache2.conf && \
     echo '    AllowOverride All' >> /etc/apache2/apache2.conf && \
     echo '</Directory>' >> /etc/apache2/apache2.conf
-    
+
 # Set Apache to serve from Laravel's public directory
 RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|' /etc/apache2/sites-available/000-default.conf
 
@@ -40,31 +40,30 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory to Apache root
 WORKDIR /var/www/html
 
-# Copy application files into container
+# Copy application files
 COPY . .
 
+# Remove cached bootstrap files
 RUN rm -rf bootstrap/cache/*.php
 
-# Only copy if the file exists
+# Copy .env file if it exists
 COPY --chown=www-data:www-data .env.example .env
 
-# Install PHP dependencies without dev and optimize autoloader
+# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-scripts
 
-
-# Install Filament 3 compatible with Laravel 11
+# Install Filament (if not already required in composer.json)
 RUN composer require filament/filament:"^3.0" --no-interaction --no-scripts
 
-# Set ownership to www-data user for storage and cache folders
+# Set correct permissions
 RUN chown -R www-data:www-data storage bootstrap/cache
-RUN chown -R www-data:www-data public/storage
 
-
-# Expose port 80 for Apache
+# Expose port 80
 EXPOSE 80
 
+# Run Laravel setup & start Apache
 CMD php artisan migrate --force && \
     php artisan db:seed --force && \
     php artisan storage:link && \
+    chown -R www-data:www-data public/storage && \
     apache2-foreground
-
