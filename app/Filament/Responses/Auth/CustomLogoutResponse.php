@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class CustomLogoutResponse implements LogoutResponseContract
 {
     public function toResponse(Request $request)
-    {
-        return redirect('/login'); // Custom login route
-    }
+{
+    return redirect()->route('login'); // This will now redirect to /PHV-login
+}
 }
