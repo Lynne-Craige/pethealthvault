@@ -36,6 +36,8 @@ class PetResource extends Resource
                         FileUpload::make('Image')
                             ->disk('public') 
                             ->directory('') 
+                            ->image()
+                            ->visibility('public')
                             ->nullable(), 
                         Select::make('Species')
                             ->options([
