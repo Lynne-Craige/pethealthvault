@@ -11,7 +11,7 @@ return [
 
     'auth' => [
     'logout' => [
-        'redirect_to' => '/PHV-Login', // change this to your login route
+        'redirect_to' => '/login', // change this to your login route
     ],
 ],
 
