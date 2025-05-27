@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y \
     libsodium-dev \
     libpq-dev \
     unzip \
+    git \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) \
         bcmath \
@@ -37,35 +38,27 @@ RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|' /et
 # Install Composer globally
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set working directory to Apache root
+# Set working directory
 WORKDIR /var/www/html
 
 # Copy application files
 COPY . .
 
-# Remove cached bootstrap files
+# Clean cached bootstrap
 RUN rm -rf bootstrap/cache/*.php
 
-# Copy .env file if it exists
+# Use .env.example as default
 COPY --chown=www-data:www-data .env.example .env
 
-RUN composer diagnose
-# Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader --verbose
+# Install dependencies
+RUN composer install --no-dev --optimize-autoloader --no-interaction --verbose
 
-# Install Filament (if not already required in composer.json)
-RUN composer require filament/filament:"^3.0" --no-interaction --no-scripts
-
-
+# Set correct permissions
 RUN chown -R www-data:www-data storage bootstrap/cache public \
     && chmod -R 775 storage bootstrap/cache public
-# Expose port 80
+
+# Expose port
 EXPOSE 80
-# Link storage and fix permissions
-CMD mkdir -p storage/app/public && \
-    php artisan migrate --force && \
-    php artisan db:seed --force && \
-    php artisan storage:link && \
-    chown -R www-data:www-data storage bootstrap/cache public/storage && \
-    chmod -R 775 storage bootstrap/cache public/storage && \
-    apache2-foreground
+
+# Start Apache only; migrations run from Render's startCommand
+CMD ["apache2-foreground"]
