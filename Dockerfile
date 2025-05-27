@@ -11,8 +11,6 @@ RUN apt-get update && apt-get install -y \
     libsodium-dev \
     libpq-dev \
     unzip \
-    git \
-    curl \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) \
         bcmath \
@@ -45,23 +43,24 @@ WORKDIR /var/www/html
 # Copy application files
 COPY . .
 
-# Copy .env example as fallback (Render will inject real vars)
+# Remove cached bootstrap files
+RUN rm -rf bootstrap/cache/*.php
+
+# Copy .env file if it exists
 COPY --chown=www-data:www-data .env.example .env
 
-# Set correct permissions
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader 
+
+# Install Filament (if not already required in composer.json)
+RUN composer require filament/filament:"^3.0" --no-interaction --no-scripts
+
+
 RUN chown -R www-data:www-data storage bootstrap/cache public \
     && chmod -R 775 storage bootstrap/cache public
-
-# Install PHP dependencies (skip diagnose to avoid build failure)
-RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --optimize-autoloader --no-scripts --no-interaction
-
-# Optional: install Filament only if not included in composer.json
-# RUN composer require filament/filament:"^3.0" --no-interaction --no-scripts
-
 # Expose port 80
 EXPOSE 80
-
-# Final setup and start Apache
+# Link storage and fix permissions
 CMD mkdir -p storage/app/public && \
     php artisan migrate --force && \
     php artisan db:seed --force && \
