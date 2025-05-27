@@ -34,7 +34,7 @@ class PetResource extends Resource
                             ->required()
                             ->maxLength(255),
                         FileUpload::make('Image')
-                            ->disk('public') 
+                            ->disk('cloudinary') 
                             ->directory('pets')
                             ->image()
                             ->visibility('public')
