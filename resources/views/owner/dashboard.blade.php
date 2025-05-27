@@ -35,7 +35,7 @@
                         </form>
                     </li>
                     <li class="profile-dropdown-list-item">
-                        <form id="logout-form" action="{{ route('user.logout') }}" method="POST" style="display: inline;">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: inline;">
                             @csrf
                             <button type="submit" style="background: none; border: none; color: inherit; cursor: pointer;">
                                 <i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out
