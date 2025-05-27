@@ -51,6 +51,8 @@ RUN composer require filament/filament:"^3.0" --no-interaction --no-scripts
 
 # Set ownership to www-data user for storage and cache folders
 RUN chown -R www-data:www-data storage bootstrap/cache
+RUN chown -R www-data:www-data public/storage
+
 
 # Expose port 80 for Apache
 EXPOSE 80
