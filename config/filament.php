@@ -8,15 +8,6 @@ return [
     'database_notifications' => [
         'enabled' => true,
     ],
-'auth' => [
-    'logout_route' => '/logout', // Ensure this matches your route
-],
-
-    'auth' => [
-    'logout' => [
-        'redirect_to' => '/PHV-Login', // Change this to your custom login route
-    ],
-],
 
     'path' => 'admin',
     'middleware' => ['web', 'auth'],
