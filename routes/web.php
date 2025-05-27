@@ -6,8 +6,8 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Route::get('/PHV-Login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/PHV-Login', [AuthController::class, 'login'])->name('login.user');
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.user');
 Route::get('/owner/dashboard', [AuthController::class, 'index'])->name('owner.dashboard');
 
 Route::get("/forget-password", [AuthController::class, "forgotPassword"])->name("forgot.password");
