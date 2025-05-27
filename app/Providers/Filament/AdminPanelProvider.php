@@ -59,7 +59,6 @@ class AdminPanelProvider extends PanelProvider
 
     public function boot(): void
     {
-        parent::boot();
 
         Filament::serving(function () {
             Filament::registerLogoutResponse(function () {
