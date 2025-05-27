@@ -35,7 +35,7 @@ class PetResource extends Resource
                             ->maxLength(255),
                         FileUpload::make('Image')
                             ->disk('public') 
-                            ->directory('') 
+                            ->directory('pets')
                             ->image()
                             ->visibility('public')
                             ->nullable(), 
