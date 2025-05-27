@@ -25,6 +25,12 @@ RUN apt-get update && apt-get install -y \
         pdo_pgsql \
     && a2enmod rewrite
 
+# Allow symbolic links and .htaccess override in public directory
+RUN echo '<Directory /var/www/html/public>' >> /etc/apache2/apache2.conf && \
+    echo '    Options +FollowSymLinks' >> /etc/apache2/apache2.conf && \
+    echo '    AllowOverride All' >> /etc/apache2/apache2.conf && \
+    echo '</Directory>' >> /etc/apache2/apache2.conf
+    
 # Set Apache to serve from Laravel's public directory
 RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|' /etc/apache2/sites-available/000-default.conf
 
