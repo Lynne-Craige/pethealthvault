@@ -9,6 +9,6 @@ class CustomLogoutResponse implements LogoutResponseContract
 {
     public function toResponse(Request $request)
     {
-        return redirect('/PHV-Login'); // Custom login route
+        return redirect('/login'); // Custom login route
     }
 }
