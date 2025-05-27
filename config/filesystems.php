@@ -32,8 +32,8 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => '/mnt/storage',
-            //'root' => storage_path('app/private'),
+            //'root' => '/mnt/storage',
+            'root' => storage_path('app/private'),
             'serve' => true,
             'throw' => false,
         ],
