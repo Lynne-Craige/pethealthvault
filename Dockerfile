@@ -55,15 +55,15 @@ RUN composer install --no-dev --optimize-autoloader --no-scripts
 # Install Filament (if not already required in composer.json)
 RUN composer require filament/filament:"^3.0" --no-interaction --no-scripts
 
-# Set correct permissions
-RUN chown -R www-data:www-data storage bootstrap/cache
 
+RUN chown -R www-data:www-data storage bootstrap/cache public \
+    && chmod -R 775 storage bootstrap/cache public
 # Expose port 80
 EXPOSE 80
-
-# Run Laravel setup & start Apache
+# Link storage and fix permissions
 CMD php artisan migrate --force && \
     php artisan db:seed --force && \
     php artisan storage:link && \
-    chown -R www-data:www-data public/storage && \
+    chown -R www-data:www-data storage bootstrap/cache public/storage && \
+    chmod -R 775 storage bootstrap/cache public/storage && \
     apache2-foreground
