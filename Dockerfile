@@ -50,7 +50,7 @@ RUN rm -rf bootstrap/cache/*.php
 COPY --chown=www-data:www-data .env.example .env
 
 # Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader --no-scripts
+RUN composer install --no-dev --optimize-autoloader 
 
 # Install Filament (if not already required in composer.json)
 RUN composer require filament/filament:"^3.0" --no-interaction --no-scripts
