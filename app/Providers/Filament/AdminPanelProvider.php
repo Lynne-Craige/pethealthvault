@@ -9,7 +9,6 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages;
 use Filament\Panel;
-use Filament\Facades\Filament;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -25,10 +24,6 @@ class AdminPanelProvider extends PanelProvider
     
     public function panel(Panel $panel): Panel
 {
-    Filament::serving(function () {
-        Filament::registerLogoutResponse(fn() => redirect('/login'));
-    });
-
     return $panel
         ->default()
         ->id('admin')
