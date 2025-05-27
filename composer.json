@@ -12,6 +12,7 @@
         "kreait/laravel-firebase": "^5.10",
         "laravel/framework": "^11.31",
         "laravel/jetstream": "^5.3",
+        "cloudinary-labs/cloudinary-laravel": "^1.0",
         "laravel/tinker": "^2.9"
     },
     "require-dev": {
@@ -51,6 +52,9 @@
             "@php artisan key:generate --ansi",
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan migrate --graceful --ansi"
+        ],
+        "post-install-cmd": [
+        "@php artisan vendor:publish --tag=cloudinary-config --force"
         ],
         "dev": [
             "Composer\\Config::disableProcessTimeout",
