@@ -71,7 +71,10 @@ class AuthController extends Controller
             $pet->latestDiagnosis = $pet->diagnosis()->latest('RecordDate')->first();
         }
 
-        return view('owner.dashboard', compact('pets'));
+        // Get all booked date/time combinations
+        $bookedSlots = Appointment::select('AppointmentDate', 'AppointmentTime')->get();
+
+        return view('owner.dashboard', compact('pets', 'bookedSlots'));
     }
 
 
