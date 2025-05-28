@@ -147,28 +147,39 @@ class AuthController extends Controller
 
 
      public function store(Request $request)
-    {
-        $request->validate([
-            'OwnerEmail' => 'required|email|exists:users,email',
-            'FirstName' => 'required|string|max:255',
-            'LastName' => 'required|string|max:255',
-            'AppointmentDate' => 'required|date',
-            'AppointmentTime' => 'required',
-            'Description' => 'nullable|string',
-        ]);
+{
+    $request->validate([
+        'OwnerEmail' => 'required|email|exists:users,email',
+        'FirstName' => 'required|string|max:255',
+        'LastName' => 'required|string|max:255',
+        'AppointmentDate' => 'required|date',
+        'AppointmentTime' => 'required',
+        'Description' => 'nullable|string',
+        'PetID' => 'required|exists:pets,PetID',
+    ]);
 
-        $appointment = new Appointment();
-        $appointment->FirstName = $request->FirstName;
-        $appointment->LastName = $request->LastName;
-        $appointment->OwnerEmail = $request->OwnerEmail;
-        $appointment->AppointmentDate = $request->AppointmentDate;
-        $appointment->AppointmentTime = $request->AppointmentTime;
-        $appointment->Description = $request->Description;
-        $appointment->Status = 'Pending';
-        $appointment->save();
+    
+    $exists = Appointment::where('AppointmentDate', $request->AppointmentDate)
+        ->where('AppointmentTime', $request->AppointmentTime)
+        ->exists();
 
-        return redirect()->back()->with('success', 'Appointment scheduled successfully.')->withFragment('appointments-' . $request->PetID);
+    if ($exists) {
+        return redirect()->back()->withErrors(['AppointmentTime' => 'This time slot is already booked.'])->withInput();
     }
+
+    $appointment = new Appointment();
+    $appointment->PetID = $request->PetID; // Make sure PetID is stored
+    $appointment->FirstName = $request->FirstName;
+    $appointment->LastName = $request->LastName;
+    $appointment->OwnerEmail = $request->OwnerEmail;
+    $appointment->AppointmentDate = $request->AppointmentDate;
+    $appointment->AppointmentTime = $request->AppointmentTime;
+    $appointment->Description = $request->Description;
+    $appointment->Status = 'Pending';
+    $appointment->save();
+
+    return redirect()->back()->with('success', 'Appointment scheduled successfully.')->withFragment('appointments-' . $request->PetID);
+}
 
 
     /* CHANGE PASSWORD */
