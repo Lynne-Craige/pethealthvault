@@ -398,13 +398,18 @@
                                                     <span class="details">Appointment Time</span>
                                                     <select name="AppointmentTime" required>
                                                         @php
-                                                        $hours = [];
-                                                        foreach (range(9, 12) as $h) $hours[] = "$h:00";
-                                                        foreach (range(13, 18) as $h) $hours[] = "$h:00";
-                                                        @endphp
-                                                        @foreach ($hours as $hour)
-                                                        <option value="{{ $hour }}">{{ \Carbon\Carbon::parse($hour)->format('g A') }}</option>
-                                                        @endforeach
+    $bookedTimesForDate = $bookedSlots->where('AppointmentDate', $date->format('Y-m-d'))->pluck('AppointmentTime')->toArray();
+    $hours = [];
+    foreach (range(9, 12) as $h) $hours[] = "$h:00";
+    foreach (range(13, 18) as $h) $hours[] = "$h:00";
+@endphp
+
+@foreach ($hours as $hour)
+    @if (!in_array($hour, $bookedTimesForDate))
+        <option value="{{ $hour }}">{{ \Carbon\Carbon::parse($hour)->format('g A') }}</option>
+    @endif
+@endforeach
+
                                                     </select>
                                                 </div>
 
