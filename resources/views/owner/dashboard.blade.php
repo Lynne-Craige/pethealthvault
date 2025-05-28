@@ -452,6 +452,7 @@
         <p>@2024-2025 Pet Health Vault. All rights reserved.</p>
     </footer>
     <script src="{{ asset('js/ownerdashboard.js') }}"></script>
+    <script>const bookedSlots = @json($bookedSlots);</script>
 </body>
 
 </html>
