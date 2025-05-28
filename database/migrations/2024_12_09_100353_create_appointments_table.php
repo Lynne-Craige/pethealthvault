@@ -21,6 +21,8 @@ return new class extends Migration
             $table->timestamps();
             $table->foreign('PetID')->references('PetID')->on('pets')->onDelete('cascade');
 
+            $table->unique(['AppointmentDate', 'AppointmentTime']);
+
             $table->index('PetID');
             $table->index('AppointmentDate');
             $table->index('Status');
