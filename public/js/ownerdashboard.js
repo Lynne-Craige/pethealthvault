@@ -98,5 +98,48 @@ $(document).ready(function () {
 
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+        const forms = document.querySelectorAll('.schedule-appointment-form');
+
+        forms.forEach(form => {
+            const petId = form.id.split('-').pop(); // get PetID from div ID
+            const dateSelect = document.querySelector(`#appointment-date-${petId}`);
+            const timeSelect = document.querySelector(`#appointment-time-${petId}`);
+
+            if (!dateSelect || !timeSelect) return;
+
+            dateSelect.addEventListener('change', function () {
+                const selectedDate = this.value;
+                timeSelect.innerHTML = '<option>Loading...</option>';
+
+                fetch(`/available-times?date=${selectedDate}`)
+                    .then(res => res.json())
+                    .then(times => {
+                        timeSelect.innerHTML = ''; // clear old times
+
+                        if (times.length === 0) {
+                            timeSelect.innerHTML = '<option value="">No available times</option>';
+                            return;
+                        }
+
+                        times.forEach(time => {
+                            const option = document.createElement('option');
+                            option.value = time;
+
+                            const timeFormat = new Date(`1970-01-01T${time}:00`).toLocaleTimeString([], {
+                                hour: 'numeric', minute: '2-digit'
+                            });
+
+                            option.textContent = timeFormat;
+                            timeSelect.appendChild(option);
+                        });
+                    });
+            });
+
+            // Trigger once on load to refresh times for the default date
+            dateSelect.dispatchEvent(new Event('change'));
+        });
+    });
+
 
 
