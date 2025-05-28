@@ -185,21 +185,24 @@ class AuthController extends Controller
 {
     $date = $request->query('date');
 
-    $allSlots = [
-        '09:00', '10:00', '11:00', '12:00',
-        '13:00', '14:00', '15:00', '16:00',
-        '17:00', '18:00'
-    ];
+    if (!$date) {
+        return response()->json(['error' => 'No date provided'], 400);
+    }
 
-    $booked = Appointment::where('AppointmentDate', $date)
-        ->pluck('AppointmentTime')
-        ->toArray();
+    $bookedTimes = Appointment::where('AppointmentDate', $date)->pluck('AppointmentTime');
 
-    $available = array_values(array_diff($allSlots, $booked));
+    $allTimes = collect(range(9, 12))
+        ->merge(range(13, 18))
+        ->map(function ($hour) {
+            return sprintf('%02d:00', $hour);
+        });
 
-    return response()->json($available);
+    $available = $allTimes->reject(function ($time) use ($bookedTimes) {
+        return $bookedTimes->contains($time);
+    });
+
+    return response()->json(array_values($available->toArray()));
 }
-
 
 
     /* CHANGE PASSWORD */
