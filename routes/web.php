@@ -21,7 +21,7 @@ Route::post("/update-password", [AuthController::class, "changePasswordUpdate"])
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::post('/appointment-store', [AuthController::class, 'store'])->name('appointment.store');
-Route::get('/available-times', [AuthController::class, 'getAvailableTimes']);
+
 
 
 
