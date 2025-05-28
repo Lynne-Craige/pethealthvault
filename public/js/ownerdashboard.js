@@ -98,6 +98,30 @@ $(document).ready(function () {
 
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    const dateSelect = document.getElementById('appointmentDate');
+    const timeSelect = document.getElementById('appointmentTime');
+
+    dateSelect.addEventListener('change', function () {
+        const selectedDate = this.value;
+
+        // Clear disabled states first
+        Array.from(timeSelect.options).forEach(option => {
+            option.disabled = false;
+        });
+
+        // Disable options already booked on the selected date
+        bookedSlots.forEach(slot => {
+            if (slot.AppointmentDate === selectedDate) {
+                const timeOption = Array.from(timeSelect.options).find(opt => opt.value === slot.AppointmentTime);
+                if (timeOption) {
+                    timeOption.disabled = true;
+                }
+            }
+        });
+    });
+});
+
 
                       
                           
