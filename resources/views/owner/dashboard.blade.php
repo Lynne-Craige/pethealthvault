@@ -329,6 +329,21 @@
                                         <form action="{{ route('appointment.store') }}" method="POST">
                                             @csrf
 
+                                            @if(session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+@endif
+
+@if($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
                                             <div class="user-details">
                                                 <div class="input-box">
                                                     <span class="details">Pet</span>
