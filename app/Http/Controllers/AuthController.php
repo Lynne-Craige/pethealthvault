@@ -181,6 +181,26 @@ class AuthController extends Controller
     return redirect()->back()->with('success', 'Appointment scheduled successfully.')->withFragment('appointments-' . $request->PetID);
 }
 
+    public function getAvailableTimes(Request $request)
+{
+    $date = $request->query('date');
+
+    $allSlots = [
+        '09:00', '10:00', '11:00', '12:00',
+        '13:00', '14:00', '15:00', '16:00',
+        '17:00', '18:00'
+    ];
+
+    $booked = Appointment::where('AppointmentDate', $date)
+        ->pluck('AppointmentTime')
+        ->toArray();
+
+    $available = array_values(array_diff($allSlots, $booked));
+
+    return response()->json($available);
+}
+
+
 
     /* CHANGE PASSWORD */
     public function changePassword()
