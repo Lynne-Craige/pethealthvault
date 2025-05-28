@@ -181,28 +181,7 @@ class AuthController extends Controller
     return redirect()->back()->with('success', 'Appointment scheduled successfully.')->withFragment('appointments-' . $request->PetID);
 }
 
-    public function getAvailableTimes(Request $request)
-{
-    $date = $request->query('date');
-
-    if (!$date) {
-        return response()->json(['error' => 'No date provided'], 400);
-    }
-
-    $bookedTimes = Appointment::where('AppointmentDate', $date)->pluck('AppointmentTime');
-
-    $allTimes = collect(range(9, 12))
-        ->merge(range(13, 18))
-        ->map(function ($hour) {
-            return sprintf('%02d:00', $hour);
-        });
-
-    $available = $allTimes->reject(function ($time) use ($bookedTimes) {
-        return $bookedTimes->contains($time);
-    });
-
-    return response()->json(array_values($available->toArray()));
-}
+   
 
 
     /* CHANGE PASSWORD */
