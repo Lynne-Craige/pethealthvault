@@ -335,13 +335,12 @@
 
 @if($errors->any())
     <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+        @foreach ($errors->all() as $error)
+            <p style="margin: 0; color: red;">{{ $error }}</p>
+        @endforeach
     </div>
 @endif
+
 
 
                                             <div class="user-details">
