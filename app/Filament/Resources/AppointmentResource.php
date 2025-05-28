@@ -42,7 +42,7 @@ class AppointmentResource extends Resource
                             ->label('Email'),
 
                         Forms\Components\Select::make('PetID')
-                            ->relationship('pets', 'Name')
+                            ->relationship('pet', 'Name')
                             ->searchable()
                             ->preload()
                             ->nullable()
@@ -172,7 +172,7 @@ class AppointmentResource extends Resource
                     ->sortable()
                     ->searchable()
                     ->label('Email'),
-                Tables\Columns\TextColumn::make('pets.Name')
+                Tables\Columns\TextColumn::make('pet.Name')
                     ->searchable()
                     ->label('Pet Name'),
                 Tables\Columns\TextColumn::make('AppointmentDate')
@@ -246,7 +246,7 @@ class AppointmentResource extends Resource
     public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
     {
         return parent::getEloquentQuery()
-            ->with(['pets'])
+            ->with(['pet'])
             ->select([
                 'AppointmentID',
                 'FirstName',
