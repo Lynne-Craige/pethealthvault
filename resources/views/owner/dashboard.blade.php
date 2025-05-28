@@ -353,45 +353,32 @@
                                                     <input name="OwnerEmail" type="email" placeholder="Enter your email" required>
                                                 </div>
 
-                                                {{-- Date Dropdown --}}
-                                                <div class="input-box">
-                                                    <span class="details">Appointment Date</span>
-                                                    <select name="AppointmentDate" required>
-                                                        @php
-                                                        $today = \Carbon\Carbon::today();
-                                                        $dates = [];
+                                                <!-- Date Dropdown -->
+<div class="input-box">
+    <span class="details">Appointment Date</span>
+    <select name="AppointmentDate" id="appointment-date-{{ $pet->PetID }}" required>
+        @foreach ($dates as $date)
+            <option value="{{ $date->format('Y-m-d') }}">
+                {{ $date->format('l, F j, Y') }}
+            </option>
+        @endforeach
+    </select>
+</div>
 
-                                                        // Generate next 14 valid days (Mon–Sat)
-                                                        for ($i = 0; count($dates) < 14 && $i < 30; $i++) {
-                                                            $day=$today->copy()->addDays($i);
-                                                            if (!$day->isSunday()) {
-                                                            $dates[] = $day;
-                                                            }
-                                                            }
-                                                            @endphp
-
-                                                            @foreach ($dates as $date)
-                                                            <option value="{{ $date->format('Y-m-d') }}">
-                                                                {{ $date->format('l, F j, Y') }}
-                                                            </option>
-                                                            @endforeach
-                                                    </select>
-                                                </div>
-
-                                                {{-- Time Dropdown --}}
-                                                <div class="input-box">
-                                                    <span class="details">Appointment Time</span>
-                                                    <select name="AppointmentTime" required>
-                                                        @php
-                                                        $hours = [];
-                                                        foreach (range(9, 12) as $h) $hours[] = "$h:00";
-                                                        foreach (range(13, 18) as $h) $hours[] = "$h:00";
-                                                        @endphp
-                                                        @foreach ($hours as $hour)
-                                                        <option value="{{ $hour }}">{{ \Carbon\Carbon::parse($hour)->format('g A') }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
+<!-- Time Dropdown -->
+<div class="input-box">
+    <span class="details">Appointment Time</span>
+    <select name="AppointmentTime" id="appointment-time-{{ $pet->PetID }}" required>
+        @php
+            $hours = [];
+            foreach (range(9, 12) as $h) $hours[] = "$h:00";
+            foreach (range(13, 18) as $h) $hours[] = "$h:00";
+        @endphp
+        @foreach ($hours as $hour)
+            <option value="{{ $hour }}">{{ \Carbon\Carbon::parse($hour)->format('g A') }}</option>
+        @endforeach
+    </select>
+</div>
 
                                                 {{-- Reason Dropdown --}}
                                                 <div class="input-box">
