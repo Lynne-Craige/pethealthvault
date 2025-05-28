@@ -33,9 +33,10 @@ class Appointment extends Model
 
  
 
-    public function pets()
-    {
-        return $this->belongsTo(Pet::class, 'PetID');
-    }
+   public function pet()
+{
+    return $this->belongsTo(Pet::class, 'PetID', 'PetID');
+}
+
 
 }
